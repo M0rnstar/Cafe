@@ -1,0 +1,128 @@
+{% extends 'orders/base.html' %} {% load static %} {% block content %}
+
+<h2>Добавить новый заказ</h2>
+
+<form method="post" id="order-form">
+  {% csrf_token %}
+  <!-- Форма для номера стола -->
+  {{ order_form.as_p }}
+
+  <!-- Блок для ввода блюда -->
+  <fieldset style="border: 1px solid #ccc; padding: 10px">
+    <legend>Добавить блюдо</legend>
+    <label for="dish_name_input">Название блюда:</label>
+    <input type="text" id="dish_name_input" name="dish_name_input" />
+    <br />
+    <label for="dish_price_input">Цена:</label>
+    <input type="text" id="dish_price_input" name="dish_price_input" />
+    <br />
+    <button type="button" id="add-dish-button">Добавить блюдо</button>
+  </fieldset>
+
+  <!-- Скрытый контейнер для накопления данных о блюдах -->
+  <div id="hidden-dishes"></div>
+
+  <!-- Блок для отображения списка добавленных блюд -->
+  <h3>Список блюд в заказе:</h3>
+  <table border="1" id="dishes-table">
+    <thead>
+      <tr>
+        <th>Название блюда</th>
+        <th>Цена</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Здесь будут добавляться строки с блюдами -->
+    </tbody>
+  </table>
+
+  <br />
+  <button type="submit">Создать заказ</button>
+</form>
+
+<script>
+  // Ждём загрузки страницы
+  document.addEventListener("DOMContentLoaded", function () {
+    var addDishButton = document.getElementById("add-dish-button");
+    var dishNameInput = document.getElementById("dish_name_input");
+    var dishPriceInput = document.getElementById("dish_price_input");
+    var dishesTableBody = document.querySelector("#dishes-table tbody");
+    var hiddenDishesDiv = document.getElementById("hidden-dishes");
+
+    // Счётчик для уникальных идентификаторов блюд
+    var dishCount = 0;
+
+    addDishButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      var dishName = dishNameInput.value.trim();
+      var dishPrice = dishPriceInput.value.trim();
+
+      if (dishName === "" || dishPrice === "") {
+        alert("Пожалуйста, заполните и название блюда, и цену.");
+        return;
+      }
+
+      // Создаём уникальный идентификатор для блюда
+      var dishId = "dish-" + dishCount;
+      dishCount++;
+
+      // Создаём строку таблицы для отображения блюда
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-dish-id", dishId);
+
+      var tdName = document.createElement("td");
+      tdName.textContent = dishName;
+      var tdPrice = document.createElement("td");
+      tdPrice.textContent = dishPrice;
+      var tdActions = document.createElement("td");
+
+      // Создаём кнопку для удаления блюда
+      var deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.textContent = "Удалить";
+      deleteButton.addEventListener("click", function () {
+        // Удаляем строку таблицы
+        tr.remove();
+        // Удаляем соответствующий скрытый блок
+        var hiddenDish = document.querySelector(
+          '.hidden-dish[data-dish-id="' + dishId + '"]'
+        );
+        if (hiddenDish) {
+          hiddenDish.remove();
+        }
+      });
+      tdActions.appendChild(deleteButton);
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdPrice);
+      tr.appendChild(tdActions);
+      dishesTableBody.appendChild(tr);
+
+      // Создаём скрытый блок для передачи данных о блюде на сервер
+      var hiddenContainer = document.createElement("div");
+      hiddenContainer.classList.add("hidden-dish");
+      hiddenContainer.setAttribute("data-dish-id", dishId);
+
+      // Скрытое поле для названия блюда
+      var hiddenDishName = document.createElement("input");
+      hiddenDishName.type = "hidden";
+      hiddenDishName.name = "dish_name";
+      hiddenDishName.value = dishName;
+      // Скрытое поле для цены блюда
+      var hiddenDishPrice = document.createElement("input");
+      hiddenDishPrice.type = "hidden";
+      hiddenDishPrice.name = "dish_price";
+      hiddenDishPrice.value = dishPrice;
+
+      hiddenContainer.appendChild(hiddenDishName);
+      hiddenContainer.appendChild(hiddenDishPrice);
+      hiddenDishesDiv.appendChild(hiddenContainer);
+
+      // Очищаем поля ввода для следующего блюда
+      dishNameInput.value = "";
+      dishPriceInput.value = "";
+    });
+  });
+</script>
+{% endblock %}

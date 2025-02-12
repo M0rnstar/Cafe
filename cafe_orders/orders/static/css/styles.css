@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Ubuntu:wght@400;500;700&display=swap");
+
+* {
+  font-family: Ubuntu;
+}
+
+header {
+  text-align: center;
+  gap: 20px;
+}
+
+header h1 {
+  margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+nav a {
+  cursor: pointer;
+  padding: 15px;
+  background: rgb(29, 78, 216);
+  color: white;
+  border-width: 0px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.status {
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  background: rgba(217, 217, 217, 0.2);
+}
