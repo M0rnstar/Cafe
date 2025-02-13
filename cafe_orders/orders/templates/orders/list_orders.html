@@ -1,12 +1,12 @@
 {% extends 'orders/base.html' %}
 
 {% block content %}
-<h2>Список заказов</h2>
+<span class="title_text">Список заказов</span>
 
 
-<form method="get">
+<form method="get" class="form_list-order">
     <label for="table_number">Номер стола:</label>
-    <input type="text" name="table_number" id="table_number" value="{{ request.GET.table_number }}">
+    <input type="text" name="table_number" id="table_number" value="{{ request.GET.table_number }}" class="table-number">
 
     <label for="status">Статус:</label>
     <select name="status" id="status" class="status">
@@ -16,7 +16,7 @@
         {% endfor %}
     </select>
 
-    <button type="submit">Найти</button>
+    <button type="submit" class="search-button">Найти</button>
 </form>
 
 

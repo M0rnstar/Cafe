@@ -12,20 +12,21 @@
       <nav>
         <a href="{% url 'orders:list_orders' %}">Список заказов</a>
         <a href="{% url 'orders:add_order' %}">Добавить заказ</a>
-        <a href="{% url 'orders:calculate_revenue' %}">
-          Расчет выручки
-        </a>
+        <a href="{% url 'orders:calculate_revenue' %}"> Расчет выручки </a>
       </nav>
     </header>
 
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
+      <li class="{{ message.tags }}">{{ message }}</li>
       {% endfor %}
     </ul>
-  {% endif %}
+    {% endif %}
 
-    <main>{% block content %} {% endblock %}</main>
+    <main>
+      <div class="main_content">{% block content %} {% endblock %}</div>
+    </main>
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
