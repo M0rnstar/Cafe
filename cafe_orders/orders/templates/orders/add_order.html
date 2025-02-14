@@ -13,7 +13,7 @@
     </div>
     <div class="dish-input">
       <label for="dish_price_input">Цена:</label>
-      <input type="text" id="dish_price_input" name="dish_price_input" />
+      <input type="number" id="dish_price_input" name="dish_price_input" />
     </div>
     <button type="button" id="add-dish-button" class="add-button">
       Добавить блюдо
@@ -46,4 +46,5 @@
     <button type="submit" class="submit-order">Создать заказ</button>
   </fieldset>
 </form>
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
