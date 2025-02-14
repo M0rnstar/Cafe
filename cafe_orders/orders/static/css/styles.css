@@ -185,3 +185,7 @@ hr {
   cursor: pointer;
   border-width: 1px;
 }
+
+.messages {
+  color: red;
+}
