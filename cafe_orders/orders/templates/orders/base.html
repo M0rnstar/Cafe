@@ -15,18 +15,15 @@
         <a href="{% url 'orders:calculate_revenue' %}"> Расчет выручки </a>
       </nav>
     </header>
-
-    {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li class="{{ message.tags }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-
     <main>
       <div class="main_content">{% block content %} {% endblock %}</div>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </main>
-    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
